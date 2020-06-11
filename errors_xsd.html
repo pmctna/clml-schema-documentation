@@ -1,0 +1,1434 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      <title>Schema documentation for errors.xsd</title>
+      <link rel="stylesheet" href="docHtml.css" type="text/css"/><script type="text/javascript" xml:space="preserve">
+         <!--
+        var propertiesBoxes= new Array('properties_errors.xsd', 
+				'properties_Error', 
+				'properties_Warning', 
+				'properties_FatalError', 
+				'properties_ErrorType_FragmentId', 
+				'properties_ErrorType_XPath', 
+				'properties_ErrorAttributes_Date', 
+				'properties_ErrorAttributes_Time');
+var usedByBoxes= new Array('usedBy_Error', 
+				'usedBy_Warning', 
+				'usedBy_ErrorType', 
+				'usedBy_ErrorType_FragmentId', 
+				'usedBy_ErrorType_XPath', 
+				'usedBy_ErrorAttributes_Date', 
+				'usedBy_ErrorAttributes_Time', 
+				'usedBy_Errors', 
+				'usedBy_ErrorAttributes');
+var sourceBoxes= new Array('source_Error', 
+				'source_Warning', 
+				'source_FatalError', 
+				'source_ErrorType', 
+				'source_ErrorType_FragmentId', 
+				'source_ErrorType_XPath', 
+				'source_ErrorAttributes_Date', 
+				'source_ErrorAttributes_Time', 
+				'source_Errors', 
+				'source_ErrorAttributes');
+var diagramBoxes= new Array('diagram_Error', 
+				'diagram_Warning', 
+				'diagram_FatalError', 
+				'diagram_ErrorType', 
+				'diagram_Errors', 
+				'diagram_ErrorAttributes');
+var annotationBoxes= new Array('annotations_errors.xsd', 
+				'annotations_Error', 
+				'annotations_Warning', 
+				'annotations_FatalError', 
+				'annotations_Errors');
+var attributesBoxes= new Array('attributes_Error', 
+				'attributes_Warning', 
+				'attributes_FatalError', 
+				'attributes_ErrorType', 
+				'attributes_ErrorAttributes');
+var modelBoxes= new Array('model_Errors');
+
+      
+        var button_prefix = 'button_';
+        
+        /**
+        * Returns an element in the current HTML document.
+        *
+        * @param elementID Identifier of HTML element
+        * @return               HTML element object
+        */
+        function getElementObject(elementID) {
+            var elemObj = null;
+            if (document.getElementById) {
+                elemObj = document.getElementById(elementID);
+            }
+            return elemObj;
+        }
+        
+        /**
+        * Switches the state of a collapseable box, e.g.
+        * if it's opened, it'll be closed, and vice versa.
+        *
+        * @param boxID Identifier of box
+        */
+        function switchState(boxID) {
+            var boxObj = getElementObject(boxID);
+            var buttonObj = getElementObject(button_prefix + boxID);
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else if (boxObj.style.display == "none") {
+                // Box is closed, so open it
+                openBox(boxObj, buttonObj);
+            } else if (boxObj.style.display == "block") {
+                // Box is opened, so close it
+                closeBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+        * Opens a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function openBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "block";
+                
+                // Change text of button
+                if (boxObj.style.display == "block") {
+                    buttonObj.src = "img/btM.gif";
+                }
+            }
+        }
+        
+        /**
+        * Closes a collapseable box.
+        *
+        * @param boxObj       Collapseable box
+        * @param buttonObj Button controlling box
+        */
+        function closeBox(boxObj, buttonObj) {
+            if (boxObj == null || buttonObj == null) {
+                // Box or button not found
+            } else {
+                // Change 'display' CSS property of box
+                boxObj.style.display = "none";
+                
+                // Change text of button
+                if (boxObj.style.display == "none") {
+                    buttonObj.src = "img/btP.gif";
+                }
+            }
+        }
+    
+       function switchStateForAll(buttonObj, boxList) {
+            if (buttonObj == null) {
+                // button not found
+            } else if (buttonObj.value == "+") {
+                // Expand all
+                expandAll(boxList);
+                buttonObj.value = "-";
+            } else if (buttonObj.value == "-") {
+                // Collapse all
+                collapseAll(boxList);
+                buttonObj.value = "+";
+            }
+        }
+        
+        /**
+        * Closes all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function collapseAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                closeBox(boxObj, buttonObj);
+            }
+        }
+            
+        /**
+        * Open all boxes in a given list.
+        *
+        * @param boxList Array of box IDs
+        */
+        function expandAll(boxList) {
+            var idx;
+            for (idx = 0; idx < boxList.length; idx++) {
+                var boxObj = getElementObject(boxList[idx]);
+                var buttonObj = getElementObject(button_prefix + boxList[idx]);
+                openBox(boxObj, buttonObj);
+            }
+        }
+        
+        /**
+         * Update the message presented in the title of the html page.
+         * - If the documentation was splited by namespace we present something like: "Documentation for namespace 'ns'"
+         * - If the documentation was splited by location we present somehing like: "Documentation for 'Schema.xsd'"
+         * - If no split we always present: "Documentation for 'MainSchema.xsd'"
+         */
+        function updatePageTitle(message) {
+            top.document.title = message;
+        }
+        
+          
+                    
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function findAndFloat(id, x_displacement, y_displacement){
+
+            var element = getElementObject(id);            
+            
+            window[id + "_obj"] = element;
+            
+            if(document.layers) {
+               element.style = element;
+            }
+            
+            element.current_y = y_displacement;      
+            element.first_time = true;
+         
+            element.floatElement = function(){
+               // It may be closed by an user action.
+                
+               // Target X and Y coordinates.
+               var x, y;
+               
+               var myWidth = 0, myHeight = 0;
+               if( typeof( window.innerWidth ) == 'number' ) {
+                  //Non-IE
+                  myWidth = window.innerWidth;
+                  myHeight = window.innerHeight;
+               } else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+                  //IE 6+ in 'standards compliant mode'
+                  myWidth = document.documentElement.clientWidth;
+                  myHeight = document.documentElement.clientHeight;
+               } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+                  //IE 4 compatible
+                  myWidth = document.body.clientWidth;
+                  myHeight = document.body.clientHeight;
+               }
+               
+               
+               x = myWidth - x_displacement;
+               
+               var ns = (navigator.appName.indexOf("Netscape") != -1);               
+               y = ns ? pageYOffset : document.documentElement && document.documentElement.scrollTop ? 
+                  document.documentElement.scrollTop : document.body.scrollTop;               
+               y = y + y_displacement;               
+               
+               // The current y is the current coordinate of the floating element.
+               // This should be at the limit the y target coordinate.
+               this.current_y += (y - this.current_y)/1.25;
+               
+               // Add the pixels constant after the values
+               // and move the element.
+               var px = document.layers ? "" : "px";
+               this.style.left =  x + px;
+               this.style.top =  this.current_y + px;
+                              
+               setTimeout(this.id + "_obj.floatElement()", 100);
+            }
+            
+            element.floatElement();
+            return element;
+          }
+
+         /**
+          * Finds an HTML element by its ID and makes it floatable over the normal content.
+          *
+          * @param x_displacement The difference in pixels to the right side of the window from 
+          *           the left side of the element.
+          * @param y_displacement The difference in pixels to the right side of the window from 
+          *           the top of the element.          
+          */
+         function selectTOCGroupBy(id, isChunked, indexFileLocation, indexFileNamespace, indexFileComponent){
+
+            if (!isChunked) {
+             var selectIds = new Array('toc_group_by_namespace', 'toc_group_by_location', 'toc_group_by_component_type');
+             // Make all the tabs invisible.
+               for (i = 0; i < 3; i++){
+                  var tab = getElementObject(selectIds[i]);
+                  tab.style.display = 'none';
+               }
+               var selTab = getElementObject(id);
+               selTab.style.display = 'block';
+            } else {
+             if (id == 'toc_group_by_namespace') {
+               parent.indexFrame.location = indexFileNamespace;
+             } else  if (id == 'toc_group_by_location') {
+               parent.indexFrame.location = indexFileLocation;
+             } else  if (id == 'toc_group_by_component_type') {
+              parent.indexFrame.location = indexFileComponent;
+             }
+            }
+         }
+          
+
+    
+                    //--></script></head>
+   <body>
+      <div id="global_controls" class="globalControls" style="position:absolute;right:0;">
+         <table class="rt">
+            <tr>
+               <td class="rt_cornerTopLeft" rowspan="1" colspan="1"/>
+               <td class="rt_lineTop" rowspan="1" colspan="1"/>
+               <td class="rt_cornerTopRight" rowspan="1" colspan="1"/>
+            </tr>
+            <tr>
+               <td class="rt_lineLeft" rowspan="1" colspan="1"/>
+               <td class="rt_content" rowspan="1" colspan="1">
+                  <h3>Showing:</h3>
+                  <table>
+                     <tr>
+                        <td rowspan="1" colspan="1"><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, annotationBoxes);" class="control"/></span><span class="globalControlName">Annotations</span></td>
+                     </tr>
+                     <tr>
+                        <td rowspan="1" colspan="1"><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, attributesBoxes);" class="control"/></span><span class="globalControlName">Attributes </span></td>
+                     </tr>
+                     <tr>
+                        <td rowspan="1" colspan="1"><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, diagramBoxes);" class="control"/></span><span class="globalControlName">Diagrams</span></td>
+                     </tr>
+                     <tr>
+                        <td rowspan="1" colspan="1"><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, modelBoxes);" class="control"/></span><span class="globalControlName">Model </span></td>
+                     </tr>
+                     <tr>
+                        <td rowspan="1" colspan="1"><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, propertiesBoxes);" class="control"/></span><span class="globalControlName">Properties </span></td>
+                     </tr>
+                     <tr>
+                        <td rowspan="1" colspan="1"><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, sourceBoxes);" class="control"/></span><span class="globalControlName">Source</span></td>
+                     </tr>
+                     <tr>
+                        <td rowspan="1" colspan="1"><span><input type="checkbox" value="-" checked="checked" onclick="switchStateForAll(this, usedByBoxes);" class="control"/></span><span class="globalControlName">Used by </span></td>
+                     </tr>
+                  </table>
+                  <div align="right"><span><input type="button" onclick="getElementObject('global_controls').style.display = 'none';" value="Close"/></span></div>
+               </td>
+               <td class="rt_lineRight" rowspan="1" colspan="1"/>
+            </tr>
+            <tr>
+               <td class="rt_cornerBottomLeft" rowspan="1" colspan="1"/>
+               <td class="rt_lineBottom" rowspan="1" colspan="1"/>
+               <td class="rt_cornerBottomRight" rowspan="1" colspan="1"/>
+            </tr>
+         </table>
+      </div><a id="errors.xsd" shape="rect"/><div class="componentTitle">Imported schema <span class="qname">errors.xsd</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cornerTopLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineTop" rowspan="1" colspan="1"/>
+            <td class="rt_cornerTopRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft" rowspan="1" colspan="1"/>
+            <td class="rt_content" rowspan="1" colspan="1">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1"><b>Namespace</b></td>
+                        <td rowspan="1" colspan="1">http://www.tso.co.uk/assets/namespace/error</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_errors.xsd" type="image" src="img/btM.gif" value="-" onclick="switchState('annotations_errors.xsd');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="annotations_errors.xsd" style="display:block">
+                              <div class="annotation">Describes elements used for indicating possible errors in the content</div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_errors.xsd" type="image" src="img/btM.gif" value="-" onclick="switchState('properties_errors.xsd');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="properties_errors.xsd" style="display:block">
+                              <table class="propertiesTable">
+                                 <tr>
+                                    <td class="firstColumn" style="white-space: nowrap;" rowspan="1" colspan="1">attribute form default</td>
+                                    <td rowspan="1" colspan="1"><b>unqualified</b></td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn" style="white-space: nowrap;" rowspan="1" colspan="1">element form default</td>
+                                    <td rowspan="1" colspan="1"><b>qualified</b></td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn" style="white-space: nowrap;" rowspan="1" colspan="1">version</td>
+                                    <td rowspan="1" colspan="1"><b>2.0</b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineBottom" rowspan="1" colspan="1"/>
+            <td class="rt_cornerBottomRight" rowspan="1" colspan="1"/>
+         </tr>
+      </table><a id="Error" shape="rect"/><div class="componentTitle">Element <span class="qname">Error</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cornerTopLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineTop" rowspan="1" colspan="1"/>
+            <td class="rt_cornerTopRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft" rowspan="1" colspan="1"/>
+            <td class="rt_content" rowspan="1" colspan="1">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1"><b>Namespace</b></td>
+                        <td rowspan="1" colspan="1">http://www.tso.co.uk/assets/namespace/error</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_Error" type="image" src="img/btM.gif" value="-" onclick="switchState('annotations_Error');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="annotations_Error" style="display:block">
+                              <div class="annotation">Error messages generated automatically on the generation of the XML (that will require
+                                 manual investigation).
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Diagram</b></div>
+                           <div class="floatRight"><input id="button_diagram_Error" type="image" src="img/btM.gif" value="-" onclick="switchState('diagram_Error');" class="control"/></div>
+                        </td>
+                        <td class="diagram" rowspan="1" colspan="1">
+                           <div id="diagram_Error" style="display:block"><img alt="Diagram" border="0" src="img/errors_xsd_Element_Error.jpeg" usemap="#errors_xsd_Element_Error"/><map name="errors_xsd_Element_Error" id="errors_xsd_Element_Error">
+                                 <area alt="errors_xsd.tmp#ErrorType_FragmentId" href="errors_xsd.html#ErrorType_FragmentId" coords="131,160,234,185" shape="rect"/>
+                                 <area alt="errors_xsd.tmp#ErrorType_XPath" href="errors_xsd.html#ErrorType_XPath" coords="131,195,209,220" shape="rect"/>
+                                 <area alt="errors_xsd.tmp#ErrorType" href="errors_xsd.html#ErrorType" coords="106,3,205,25" shape="rect"/></map></div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_Error" type="image" src="img/btM.gif" value="-" onclick="switchState('properties_Error');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="properties_Error" style="display:block">
+                              <table class="propertiesTable">
+                                 <tr>
+                                    <td class="firstColumn" style="white-space: nowrap;" rowspan="1" colspan="1">content</td>
+                                    <td rowspan="1" colspan="1"><b>complex</b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_Error" type="image" src="img/btM.gif" value="-" onclick="switchState('usedBy_Error');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="usedBy_Error" style="display:block">
+                              <table class="usedByTable">
+                                 <tr>
+                                    <td class="firstColumn" rowspan="1" colspan="1">Element Group </td>
+                                    <td rowspan="1" colspan="1"><b><a href="errors_xsd.html#Errors" target="mainFrame" title="http://www.tso.co.uk/assets/namespace/error" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">Errors</a></b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Attributes</b></div>
+                           <div class="floatRight"><input id="button_attributes_Error" type="image" src="img/btM.gif" value="-" onclick="switchState('attributes_Error');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="attributes_Error" style="display:block">
+                              <table class="attributesTable">
+                                 <thead>
+                                    <tr>
+                                       <th rowspan="1" colspan="1">QName</th>
+                                       <th width="10%" rowspan="1" colspan="1">Type</th>
+                                       <th width="5%" rowspan="1" colspan="1">Use</th>
+                                       <th rowspan="1" colspan="1"/>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td class="firstColumn" rowspan="1" colspan="1"><b><a href="errors_xsd.html#ErrorType_FragmentId" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">FragmentId</a></b></td>
+                                    <td rowspan="1" colspan="1"><b>xsd:NMTOKEN</b></td>
+                                    <td rowspan="1" colspan="1">required</td>
+                                    <td rowspan="1" colspan="1">
+                                       <div class="annotation"/>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn" rowspan="1" colspan="1"><b><a href="errors_xsd.html#ErrorType_XPath" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">XPath</a></b></td>
+                                    <td rowspan="1" colspan="1"><b>xsd:string</b></td>
+                                    <td rowspan="1" colspan="1">required</td>
+                                    <td rowspan="1" colspan="1">
+                                       <div class="annotation"/>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_Error" type="image" src="img/btM.gif" value="-" onclick="switchState('source_Error');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="source_Error" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tr>
+                                    <td width="100%" rowspan="1" colspan="1"><pre xml:space="preserve"><span class="tEl">&lt;xsd:element</span><span class="tAN"> name=</span><span class="tAV">"Error"</span><span class="tAN"> type=</span><span class="tAV">"ErrorType"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xsd:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xsd:documentation</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">Error messages generated automatically on the generation of the XML (that will require manual investigation).</span><span class="tEl">&lt;/xsd:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xsd:annotation&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xsd:element&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineBottom" rowspan="1" colspan="1"/>
+            <td class="rt_cornerBottomRight" rowspan="1" colspan="1"/>
+         </tr>
+      </table><a id="Warning" shape="rect"/><div class="componentTitle">Element <span class="qname">Warning</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cornerTopLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineTop" rowspan="1" colspan="1"/>
+            <td class="rt_cornerTopRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft" rowspan="1" colspan="1"/>
+            <td class="rt_content" rowspan="1" colspan="1">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1"><b>Namespace</b></td>
+                        <td rowspan="1" colspan="1">http://www.tso.co.uk/assets/namespace/error</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_Warning" type="image" src="img/btM.gif" value="-" onclick="switchState('annotations_Warning');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="annotations_Warning" style="display:block">
+                              <div class="annotation">Warnings generated automatically on the generation of the XML, usually irrelevant
+                                 issues.
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Diagram</b></div>
+                           <div class="floatRight"><input id="button_diagram_Warning" type="image" src="img/btM.gif" value="-" onclick="switchState('diagram_Warning');" class="control"/></div>
+                        </td>
+                        <td class="diagram" rowspan="1" colspan="1">
+                           <div id="diagram_Warning" style="display:block"><img alt="Diagram" border="0" src="img/errors_xsd_Element_Warning.jpeg" usemap="#errors_xsd_Element_Warning"/><map name="errors_xsd_Element_Warning" id="errors_xsd_Element_Warning">
+                                 <area alt="errors_xsd.tmp#ErrorType_FragmentId" href="errors_xsd.html#ErrorType_FragmentId" coords="147,160,250,185" shape="rect"/>
+                                 <area alt="errors_xsd.tmp#ErrorType_XPath" href="errors_xsd.html#ErrorType_XPath" coords="147,195,225,220" shape="rect"/>
+                                 <area alt="errors_xsd.tmp#ErrorType" href="errors_xsd.html#ErrorType" coords="122,3,221,25" shape="rect"/></map></div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_Warning" type="image" src="img/btM.gif" value="-" onclick="switchState('properties_Warning');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="properties_Warning" style="display:block">
+                              <table class="propertiesTable">
+                                 <tr>
+                                    <td class="firstColumn" style="white-space: nowrap;" rowspan="1" colspan="1">content</td>
+                                    <td rowspan="1" colspan="1"><b>complex</b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_Warning" type="image" src="img/btM.gif" value="-" onclick="switchState('usedBy_Warning');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="usedBy_Warning" style="display:block">
+                              <table class="usedByTable">
+                                 <tr>
+                                    <td class="firstColumn" rowspan="1" colspan="1">Element Group </td>
+                                    <td rowspan="1" colspan="1"><b><a href="errors_xsd.html#Errors" target="mainFrame" title="http://www.tso.co.uk/assets/namespace/error" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">Errors</a></b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Attributes</b></div>
+                           <div class="floatRight"><input id="button_attributes_Warning" type="image" src="img/btM.gif" value="-" onclick="switchState('attributes_Warning');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="attributes_Warning" style="display:block">
+                              <table class="attributesTable">
+                                 <thead>
+                                    <tr>
+                                       <th rowspan="1" colspan="1">QName</th>
+                                       <th width="10%" rowspan="1" colspan="1">Type</th>
+                                       <th width="5%" rowspan="1" colspan="1">Use</th>
+                                       <th rowspan="1" colspan="1"/>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td class="firstColumn" rowspan="1" colspan="1"><b><a href="errors_xsd.html#ErrorType_FragmentId" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">FragmentId</a></b></td>
+                                    <td rowspan="1" colspan="1"><b>xsd:NMTOKEN</b></td>
+                                    <td rowspan="1" colspan="1">required</td>
+                                    <td rowspan="1" colspan="1">
+                                       <div class="annotation"/>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn" rowspan="1" colspan="1"><b><a href="errors_xsd.html#ErrorType_XPath" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">XPath</a></b></td>
+                                    <td rowspan="1" colspan="1"><b>xsd:string</b></td>
+                                    <td rowspan="1" colspan="1">required</td>
+                                    <td rowspan="1" colspan="1">
+                                       <div class="annotation"/>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_Warning" type="image" src="img/btM.gif" value="-" onclick="switchState('source_Warning');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="source_Warning" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tr>
+                                    <td width="100%" rowspan="1" colspan="1"><pre xml:space="preserve"><span class="tEl">&lt;xsd:element</span><span class="tAN"> name=</span><span class="tAV">"Warning"</span><span class="tAN"> type=</span><span class="tAV">"ErrorType"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xsd:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xsd:documentation</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">Warnings generated automatically on the generation of the XML, usually irrelevant issues.</span><span class="tEl">&lt;/xsd:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xsd:annotation&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xsd:element&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineBottom" rowspan="1" colspan="1"/>
+            <td class="rt_cornerBottomRight" rowspan="1" colspan="1"/>
+         </tr>
+      </table><a id="FatalError" shape="rect"/><div class="componentTitle">Element <span class="qname">FatalError</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cornerTopLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineTop" rowspan="1" colspan="1"/>
+            <td class="rt_cornerTopRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft" rowspan="1" colspan="1"/>
+            <td class="rt_content" rowspan="1" colspan="1">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1"><b>Namespace</b></td>
+                        <td rowspan="1" colspan="1">http://www.tso.co.uk/assets/namespace/error</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_FatalError" type="image" src="img/btM.gif" value="-" onclick="switchState('annotations_FatalError');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="annotations_FatalError" style="display:block">
+                              <div class="annotation">Serious error messages generated automatically on the generation of the XML (that
+                                 will require manual investigation).
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Diagram</b></div>
+                           <div class="floatRight"><input id="button_diagram_FatalError" type="image" src="img/btM.gif" value="-" onclick="switchState('diagram_FatalError');" class="control"/></div>
+                        </td>
+                        <td class="diagram" rowspan="1" colspan="1">
+                           <div id="diagram_FatalError" style="display:block"><img alt="Diagram" border="0" src="img/errors_xsd_Element_FatalError.jpeg" usemap="#errors_xsd_Element_FatalError"/><map name="errors_xsd_Element_FatalError" id="errors_xsd_Element_FatalError">
+                                 <area alt="errors_xsd.tmp#ErrorType_FragmentId" href="errors_xsd.html#ErrorType_FragmentId" coords="154,160,257,185" shape="rect"/>
+                                 <area alt="errors_xsd.tmp#ErrorType_XPath" href="errors_xsd.html#ErrorType_XPath" coords="154,195,232,220" shape="rect"/>
+                                 <area alt="errors_xsd.tmp#ErrorType" href="errors_xsd.html#ErrorType" coords="129,3,228,25" shape="rect"/></map></div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_FatalError" type="image" src="img/btM.gif" value="-" onclick="switchState('properties_FatalError');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="properties_FatalError" style="display:block">
+                              <table class="propertiesTable">
+                                 <tr>
+                                    <td class="firstColumn" style="white-space: nowrap;" rowspan="1" colspan="1">content</td>
+                                    <td rowspan="1" colspan="1"><b>complex</b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Attributes</b></div>
+                           <div class="floatRight"><input id="button_attributes_FatalError" type="image" src="img/btM.gif" value="-" onclick="switchState('attributes_FatalError');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="attributes_FatalError" style="display:block">
+                              <table class="attributesTable">
+                                 <thead>
+                                    <tr>
+                                       <th rowspan="1" colspan="1">QName</th>
+                                       <th width="10%" rowspan="1" colspan="1">Type</th>
+                                       <th width="5%" rowspan="1" colspan="1">Use</th>
+                                       <th rowspan="1" colspan="1"/>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td class="firstColumn" rowspan="1" colspan="1"><b><a href="errors_xsd.html#ErrorType_FragmentId" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">FragmentId</a></b></td>
+                                    <td rowspan="1" colspan="1"><b>xsd:NMTOKEN</b></td>
+                                    <td rowspan="1" colspan="1">required</td>
+                                    <td rowspan="1" colspan="1">
+                                       <div class="annotation"/>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn" rowspan="1" colspan="1"><b><a href="errors_xsd.html#ErrorType_XPath" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">XPath</a></b></td>
+                                    <td rowspan="1" colspan="1"><b>xsd:string</b></td>
+                                    <td rowspan="1" colspan="1">required</td>
+                                    <td rowspan="1" colspan="1">
+                                       <div class="annotation"/>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_FatalError" type="image" src="img/btM.gif" value="-" onclick="switchState('source_FatalError');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="source_FatalError" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tr>
+                                    <td width="100%" rowspan="1" colspan="1"><pre xml:space="preserve"><span class="tEl">&lt;xsd:element</span><span class="tAN"> name=</span><span class="tAV">"FatalError"</span><span class="tAN"> type=</span><span class="tAV">"ErrorType"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xsd:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xsd:documentation</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">Serious error messages generated automatically on the generation of the XML (that will require manual investigation).</span><span class="tEl">&lt;/xsd:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xsd:annotation&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xsd:element&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineBottom" rowspan="1" colspan="1"/>
+            <td class="rt_cornerBottomRight" rowspan="1" colspan="1"/>
+         </tr>
+      </table><a id="ErrorType" shape="rect"/><div class="componentTitle">Complex Type <span class="qname">ErrorType</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cornerTopLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineTop" rowspan="1" colspan="1"/>
+            <td class="rt_cornerTopRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft" rowspan="1" colspan="1"/>
+            <td class="rt_content" rowspan="1" colspan="1">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1"><b>Namespace</b></td>
+                        <td rowspan="1" colspan="1">http://www.tso.co.uk/assets/namespace/error</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Diagram</b></div>
+                           <div class="floatRight"><input id="button_diagram_ErrorType" type="image" src="img/btM.gif" value="-" onclick="switchState('diagram_ErrorType');" class="control"/></div>
+                        </td>
+                        <td class="diagram" rowspan="1" colspan="1">
+                           <div id="diagram_ErrorType" style="display:block"><img alt="Diagram" border="0" src="img/errors_xsd_Complex_Type_ErrorType.jpeg" usemap="#errors_xsd_Complex_Type_ErrorType"/><map name="errors_xsd_Complex_Type_ErrorType" id="errors_xsd_Complex_Type_ErrorType">
+                                 <area alt="errors_xsd.tmp#ErrorType_FragmentId" href="errors_xsd.html#ErrorType_FragmentId" coords="145,120,248,145" shape="rect"/>
+                                 <area alt="errors_xsd.tmp#ErrorType_XPath" href="errors_xsd.html#ErrorType_XPath" coords="145,155,223,180" shape="rect"/></map></div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_ErrorType" type="image" src="img/btM.gif" value="-" onclick="switchState('usedBy_ErrorType');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="usedBy_ErrorType" style="display:block">
+                              <table class="usedByTable">
+                                 <tr>
+                                    <td class="firstColumn" rowspan="1" colspan="1">Elements </td>
+                                    <td rowspan="1" colspan="1"><b><a href="errors_xsd.html#Error" target="mainFrame" title="http://www.tso.co.uk/assets/namespace/error" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">Error</a></b>, <b><a href="errors_xsd.html#FatalError" target="mainFrame" title="http://www.tso.co.uk/assets/namespace/error" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">FatalError</a></b>, <b><a href="errors_xsd.html#Warning" target="mainFrame" title="http://www.tso.co.uk/assets/namespace/error" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">Warning</a></b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Attributes</b></div>
+                           <div class="floatRight"><input id="button_attributes_ErrorType" type="image" src="img/btM.gif" value="-" onclick="switchState('attributes_ErrorType');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="attributes_ErrorType" style="display:block">
+                              <table class="attributesTable">
+                                 <thead>
+                                    <tr>
+                                       <th rowspan="1" colspan="1">QName</th>
+                                       <th width="10%" rowspan="1" colspan="1">Type</th>
+                                       <th width="5%" rowspan="1" colspan="1">Use</th>
+                                       <th rowspan="1" colspan="1"/>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td class="firstColumn" rowspan="1" colspan="1"><b><a href="errors_xsd.html#ErrorType_FragmentId" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">FragmentId</a></b></td>
+                                    <td rowspan="1" colspan="1"><b>xsd:NMTOKEN</b></td>
+                                    <td rowspan="1" colspan="1">required</td>
+                                    <td rowspan="1" colspan="1">
+                                       <div class="annotation"/>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn" rowspan="1" colspan="1"><b><a href="errors_xsd.html#ErrorType_XPath" target="mainFrame" title="No namespace" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">XPath</a></b></td>
+                                    <td rowspan="1" colspan="1"><b>xsd:string</b></td>
+                                    <td rowspan="1" colspan="1">required</td>
+                                    <td rowspan="1" colspan="1">
+                                       <div class="annotation"/>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_ErrorType" type="image" src="img/btM.gif" value="-" onclick="switchState('source_ErrorType');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="source_ErrorType" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tr>
+                                    <td width="100%" rowspan="1" colspan="1"><pre xml:space="preserve"><span class="tEl">&lt;xsd:complexType</span><span class="tAN"> name=</span><span class="tAV">"ErrorType"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xsd:simpleContent</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xsd:extension</span><span class="tAN"> base=</span><span class="tAV">"xsd:string"</span><span class="tEl">&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xsd:attribute</span><span class="tAN"> name=</span><span class="tAV">"FragmentId"</span><span class="tAN"> type=</span><span class="tAV">"xsd:NMTOKEN"</span><span class="tAN"> use=</span><span class="tAV">"required"</span><span class="tEl">/&gt;</span><span class="tI">
+      </span><span class="tEl">&lt;xsd:attribute</span><span class="tAN"> name=</span><span class="tAV">"XPath"</span><span class="tAN"> type=</span><span class="tAV">"xsd:string"</span><span class="tAN"> use=</span><span class="tAV">"required"</span><span class="tEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;/xsd:extension&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xsd:simpleContent&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xsd:complexType&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineBottom" rowspan="1" colspan="1"/>
+            <td class="rt_cornerBottomRight" rowspan="1" colspan="1"/>
+         </tr>
+      </table><a id="ErrorType_FragmentId" shape="rect"/><div class="componentTitle">Attribute <span class="qname"><b><a href="errors_xsd.html#ErrorType" target="mainFrame" title="http://www.tso.co.uk/assets/namespace/error" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">ErrorType</a></b> / @FragmentId</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cornerTopLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineTop" rowspan="1" colspan="1"/>
+            <td class="rt_cornerTopRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft" rowspan="1" colspan="1"/>
+            <td class="rt_content" rowspan="1" colspan="1">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1"><b>Namespace</b></td>
+                        <td rowspan="1" colspan="1">No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_ErrorType_FragmentId" type="image" src="img/btM.gif" value="-" onclick="switchState('properties_ErrorType_FragmentId');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="properties_ErrorType_FragmentId" style="display:block">
+                              <table class="propertiesTable">
+                                 <tr>
+                                    <td class="firstColumn" style="white-space: nowrap;" rowspan="1" colspan="1">use</td>
+                                    <td rowspan="1" colspan="1"><b>required</b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_ErrorType_FragmentId" type="image" src="img/btM.gif" value="-" onclick="switchState('usedBy_ErrorType_FragmentId');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="usedBy_ErrorType_FragmentId" style="display:block">
+                              <table class="usedByTable">
+                                 <tr>
+                                    <td class="firstColumn" rowspan="1" colspan="1">Complex Type </td>
+                                    <td rowspan="1" colspan="1"><b><a href="errors_xsd.html#ErrorType" target="mainFrame" title="http://www.tso.co.uk/assets/namespace/error" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">ErrorType</a></b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_ErrorType_FragmentId" type="image" src="img/btM.gif" value="-" onclick="switchState('source_ErrorType_FragmentId');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="source_ErrorType_FragmentId" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tr>
+                                    <td width="100%" rowspan="1" colspan="1"><pre xml:space="preserve"><span class="tEl">&lt;xsd:attribute</span><span class="tAN"> name=</span><span class="tAV">"FragmentId"</span><span class="tAN"> type=</span><span class="tAV">"xsd:NMTOKEN"</span><span class="tAN"> use=</span><span class="tAV">"required"</span><span class="tEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineBottom" rowspan="1" colspan="1"/>
+            <td class="rt_cornerBottomRight" rowspan="1" colspan="1"/>
+         </tr>
+      </table><a id="ErrorType_XPath" shape="rect"/><div class="componentTitle">Attribute <span class="qname"><b><a href="errors_xsd.html#ErrorType" target="mainFrame" title="http://www.tso.co.uk/assets/namespace/error" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">ErrorType</a></b> / @XPath</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cornerTopLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineTop" rowspan="1" colspan="1"/>
+            <td class="rt_cornerTopRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft" rowspan="1" colspan="1"/>
+            <td class="rt_content" rowspan="1" colspan="1">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1"><b>Namespace</b></td>
+                        <td rowspan="1" colspan="1">No namespace</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_ErrorType_XPath" type="image" src="img/btM.gif" value="-" onclick="switchState('properties_ErrorType_XPath');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="properties_ErrorType_XPath" style="display:block">
+                              <table class="propertiesTable">
+                                 <tr>
+                                    <td class="firstColumn" style="white-space: nowrap;" rowspan="1" colspan="1">use</td>
+                                    <td rowspan="1" colspan="1"><b>required</b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_ErrorType_XPath" type="image" src="img/btM.gif" value="-" onclick="switchState('usedBy_ErrorType_XPath');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="usedBy_ErrorType_XPath" style="display:block">
+                              <table class="usedByTable">
+                                 <tr>
+                                    <td class="firstColumn" rowspan="1" colspan="1">Complex Type </td>
+                                    <td rowspan="1" colspan="1"><b><a href="errors_xsd.html#ErrorType" target="mainFrame" title="http://www.tso.co.uk/assets/namespace/error" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">ErrorType</a></b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_ErrorType_XPath" type="image" src="img/btM.gif" value="-" onclick="switchState('source_ErrorType_XPath');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="source_ErrorType_XPath" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tr>
+                                    <td width="100%" rowspan="1" colspan="1"><pre xml:space="preserve"><span class="tEl">&lt;xsd:attribute</span><span class="tAN"> name=</span><span class="tAV">"XPath"</span><span class="tAN"> type=</span><span class="tAV">"xsd:string"</span><span class="tAN"> use=</span><span class="tAV">"required"</span><span class="tEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineBottom" rowspan="1" colspan="1"/>
+            <td class="rt_cornerBottomRight" rowspan="1" colspan="1"/>
+         </tr>
+      </table><a id="ErrorAttributes_Date" shape="rect"/><div class="componentTitle">Attribute <span class="qname"><b><a href="errors_xsd.html#ErrorAttributes" target="mainFrame" title="http://www.tso.co.uk/assets/namespace/error" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">ErrorAttributes</a></b> / @Date</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cornerTopLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineTop" rowspan="1" colspan="1"/>
+            <td class="rt_cornerTopRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft" rowspan="1" colspan="1"/>
+            <td class="rt_content" rowspan="1" colspan="1">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1"><b>Namespace</b></td>
+                        <td rowspan="1" colspan="1">http://www.tso.co.uk/assets/namespace/error</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_ErrorAttributes_Date" type="image" src="img/btM.gif" value="-" onclick="switchState('properties_ErrorAttributes_Date');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="properties_ErrorAttributes_Date" style="display:block">
+                              <table class="propertiesTable">
+                                 <tr>
+                                    <td class="firstColumn" style="white-space: nowrap;" rowspan="1" colspan="1">content</td>
+                                    <td rowspan="1" colspan="1"><b>simple</b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_ErrorAttributes_Date" type="image" src="img/btM.gif" value="-" onclick="switchState('usedBy_ErrorAttributes_Date');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="usedBy_ErrorAttributes_Date" style="display:block">
+                              <table class="usedByTable">
+                                 <tr>
+                                    <td class="firstColumn" rowspan="1" colspan="1">Attribute Group </td>
+                                    <td rowspan="1" colspan="1"><b><a href="errors_xsd.html#ErrorAttributes" target="mainFrame" title="http://www.tso.co.uk/assets/namespace/error" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">ErrorAttributes</a></b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_ErrorAttributes_Date" type="image" src="img/btM.gif" value="-" onclick="switchState('source_ErrorAttributes_Date');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="source_ErrorAttributes_Date" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tr>
+                                    <td width="100%" rowspan="1" colspan="1"><pre xml:space="preserve"><span class="tEl">&lt;xsd:attribute</span><span class="tAN"> form=</span><span class="tAV">"qualified"</span><span class="tAN"> name=</span><span class="tAV">"Date"</span><span class="tAN"> type=</span><span class="tAV">"xsd:date"</span><span class="tEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineBottom" rowspan="1" colspan="1"/>
+            <td class="rt_cornerBottomRight" rowspan="1" colspan="1"/>
+         </tr>
+      </table><a id="ErrorAttributes_Time" shape="rect"/><div class="componentTitle">Attribute <span class="qname"><b><a href="errors_xsd.html#ErrorAttributes" target="mainFrame" title="http://www.tso.co.uk/assets/namespace/error" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">ErrorAttributes</a></b> / @Time</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cornerTopLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineTop" rowspan="1" colspan="1"/>
+            <td class="rt_cornerTopRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft" rowspan="1" colspan="1"/>
+            <td class="rt_content" rowspan="1" colspan="1">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1"><b>Namespace</b></td>
+                        <td rowspan="1" colspan="1">http://www.tso.co.uk/assets/namespace/error</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Properties</b></div>
+                           <div class="floatRight"><input id="button_properties_ErrorAttributes_Time" type="image" src="img/btM.gif" value="-" onclick="switchState('properties_ErrorAttributes_Time');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="properties_ErrorAttributes_Time" style="display:block">
+                              <table class="propertiesTable">
+                                 <tr>
+                                    <td class="firstColumn" style="white-space: nowrap;" rowspan="1" colspan="1">content</td>
+                                    <td rowspan="1" colspan="1"><b>simple</b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_ErrorAttributes_Time" type="image" src="img/btM.gif" value="-" onclick="switchState('usedBy_ErrorAttributes_Time');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="usedBy_ErrorAttributes_Time" style="display:block">
+                              <table class="usedByTable">
+                                 <tr>
+                                    <td class="firstColumn" rowspan="1" colspan="1">Attribute Group </td>
+                                    <td rowspan="1" colspan="1"><b><a href="errors_xsd.html#ErrorAttributes" target="mainFrame" title="http://www.tso.co.uk/assets/namespace/error" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">ErrorAttributes</a></b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_ErrorAttributes_Time" type="image" src="img/btM.gif" value="-" onclick="switchState('source_ErrorAttributes_Time');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="source_ErrorAttributes_Time" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tr>
+                                    <td width="100%" rowspan="1" colspan="1"><pre xml:space="preserve"><span class="tEl">&lt;xsd:attribute</span><span class="tAN"> form=</span><span class="tAV">"qualified"</span><span class="tAN"> name=</span><span class="tAV">"Time"</span><span class="tAN"> type=</span><span class="tAV">"xsd:time"</span><span class="tEl">/&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineBottom" rowspan="1" colspan="1"/>
+            <td class="rt_cornerBottomRight" rowspan="1" colspan="1"/>
+         </tr>
+      </table><a id="Errors" shape="rect"/><div class="componentTitle">Element Group <span class="qname">Errors</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cornerTopLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineTop" rowspan="1" colspan="1"/>
+            <td class="rt_cornerTopRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft" rowspan="1" colspan="1"/>
+            <td class="rt_content" rowspan="1" colspan="1">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1"><b>Namespace</b></td>
+                        <td rowspan="1" colspan="1">http://www.tso.co.uk/assets/namespace/error</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Annotations</b></div>
+                           <div class="floatRight"><input id="button_annotations_Errors" type="image" src="img/btM.gif" value="-" onclick="switchState('annotations_Errors');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="annotations_Errors" style="display:block">
+                              <div class="annotation">Error messages that may appear within the legislation XML.</div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Diagram</b></div>
+                           <div class="floatRight"><input id="button_diagram_Errors" type="image" src="img/btM.gif" value="-" onclick="switchState('diagram_Errors');" class="control"/></div>
+                        </td>
+                        <td class="diagram" rowspan="1" colspan="1">
+                           <div id="diagram_Errors" style="display:block"><img alt="Diagram" border="0" src="img/errors_xsd_Element_Group_Errors.jpeg" usemap="#errors_xsd_Element_Group_Errors"/><map name="errors_xsd_Element_Group_Errors" id="errors_xsd_Element_Group_Errors">
+                                 <area alt="errors_xsd.tmp#Error" href="errors_xsd.html#Error" coords="204,0,259,25" shape="rect"/>
+                                 <area alt="errors_xsd.tmp#Warning" href="errors_xsd.html#Warning" coords="204,94,275,119" shape="rect"/></map></div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_Errors" type="image" src="img/btM.gif" value="-" onclick="switchState('usedBy_Errors');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="usedBy_Errors" style="display:block">
+                              <table class="usedByTable">
+                                 <tr>
+                                    <td class="firstColumn" rowspan="1" colspan="1">Element Groups </td>
+                                    <td rowspan="1" colspan="1"><b><a href="schemaLegislationTypes_xsd.html#BlockSection" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationTypes.xsd')" shape="rect">BlockSection</a></b>, <b><a href="schemaLegislationTypes_xsd.html#InlineBasic" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationTypes.xsd')" shape="rect">InlineBasic</a></b>, <b><a href="schemaLegislationTypes_xsd.html#InlineBasicRestricted" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationTypes.xsd')" shape="rect">InlineBasicRestricted</a></b>, <b><a href="schemaLegislationTypes_xsd.html#InlineLegislationCitation" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationTypes.xsd')" shape="rect">InlineLegislationCitation</a></b>, <b><a href="schemaLegislationTypes_xsd.html#InlineModel" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationTypes.xsd')" shape="rect">InlineModel</a></b>, <b><a href="schemaLegislationTypes_xsd.html#ParaBasic" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationTypes.xsd')" shape="rect">ParaBasic</a></b></td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn" rowspan="1" colspan="1">Elements </td>
+                                    <td rowspan="1" colspan="1"><b><a href="schemaLegislationMain_xsd.html#AppendixBody" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationMain.xsd')" shape="rect">AppendixBody</a></b>, <b><a href="schemaLegislationStructure_xsd.html#Chapter" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationStructure.xsd')" shape="rect">Chapter</a></b>, <b><a href="schemaLegislationStructure_xsd.html#Group" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationStructure.xsd')" shape="rect">Group</a></b>, <b><a href="schemaLegislationNumberedSections_xsd.html#P1" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationNumberedSections.xsd')" shape="rect">P1</a></b>, <b><a href="schemaLegislationNumberedSections_xsd.html#P1group" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationNumberedSections.xsd')" shape="rect">P1group</a></b>, <b><a href="schemaLegislationNumberedSections_xsd.html#P2" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationNumberedSections.xsd')" shape="rect">P2</a></b>, <b><a href="schemaLegislationNumberedSections_xsd.html#P2group" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationNumberedSections.xsd')" shape="rect">P2group</a></b>, <b><a href="schemaLegislationNumberedSections_xsd.html#P3" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationNumberedSections.xsd')" shape="rect">P3</a></b>, <b><a href="schemaLegislationNumberedSections_xsd.html#P3group" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationNumberedSections.xsd')" shape="rect">P3group</a></b>, <b><a href="schemaLegislationNumberedSections_xsd.html#P4" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationNumberedSections.xsd')" shape="rect">P4</a></b>, <b><a href="schemaLegislationNumberedSections_xsd.html#P5" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationNumberedSections.xsd')" shape="rect">P5</a></b>, <b><a href="schemaLegislationNumberedSections_xsd.html#P6" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationNumberedSections.xsd')" shape="rect">P6</a></b>, <b><a href="schemaLegislationNumberedSections_xsd.html#P7" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationNumberedSections.xsd')" shape="rect">P7</a></b>, <b><a href="schemaLegislationStructure_xsd.html#Part" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationStructure.xsd')" shape="rect">Part</a></b>, <b><a href="schemaLegislationStructure_xsd.html#Pblock" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationStructure.xsd')" shape="rect">Pblock</a></b>, <b><a href="schemaLegislationNumberedSections_xsd.html#Pnumber" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationNumberedSections.xsd')" shape="rect">Pnumber</a></b>, <b><a href="schemaLegislationPrelims_xsd.html#PrimaryPrelims" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationPrelims.xsd')" shape="rect">PrimaryPrelims</a></b>, <b><a href="schemaLegislationStructure_xsd.html#PsubBlock" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationStructure.xsd')" shape="rect">PsubBlock</a></b>, <b><a href="schemaLegislationMain_xsd.html#ScheduleBody" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationMain.xsd')" shape="rect">ScheduleBody</a></b>, <b><a href="schemaLegislationPrelims_xsd.html#SubjectInformation" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationPrelims.xsd')" shape="rect">SubjectInformation</a></b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1"><b>Model</b><div class="floatRight"><input id="button_model_Errors" type="image" src="img/btM.gif" value="-" onclick="switchState('model_Errors');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="model_Errors" style="display:block"><b><a href="errors_xsd.html#Error" target="mainFrame" title="http://www.tso.co.uk/assets/namespace/error" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">Error</a></b> | <b><a href="errors_xsd.html#Warning" target="mainFrame" title="http://www.tso.co.uk/assets/namespace/error" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">Warning</a></b></div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1"><b>Children</b></td>
+                        <td rowspan="1" colspan="1"><b><a href="errors_xsd.html#Error" target="mainFrame" title="http://www.tso.co.uk/assets/namespace/error" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">Error</a></b>, <b><a href="errors_xsd.html#Warning" target="mainFrame" title="http://www.tso.co.uk/assets/namespace/error" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">Warning</a></b></td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_Errors" type="image" src="img/btM.gif" value="-" onclick="switchState('source_Errors');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="source_Errors" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tr>
+                                    <td width="100%" rowspan="1" colspan="1"><pre xml:space="preserve"><span class="tEl">&lt;xsd:group</span><span class="tAN"> name=</span><span class="tAV">"Errors"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xsd:annotation</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xsd:documentation</span><span class="tEl">&gt;</span><span class="tT" style="white-space:normal">Error messages that may appear within the legislation XML.</span><span class="tEl">&lt;/xsd:documentation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xsd:annotation&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xsd:choice</span><span class="tEl">&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xsd:element</span><span class="tAN"> ref=</span><span class="tAV">"Error"</span><span class="tEl">/&gt;</span><span class="tI">
+    </span><span class="tEl">&lt;xsd:element</span><span class="tAN"> ref=</span><span class="tAV">"Warning"</span><span class="tEl">/&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;/xsd:choice&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xsd:group&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineBottom" rowspan="1" colspan="1"/>
+            <td class="rt_cornerBottomRight" rowspan="1" colspan="1"/>
+         </tr>
+      </table><a id="ErrorAttributes" shape="rect"/><div class="componentTitle">Attribute Group <span class="qname">ErrorAttributes</span></div>
+      <table class="rt">
+         <tr>
+            <td class="rt_cornerTopLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineTop" rowspan="1" colspan="1"/>
+            <td class="rt_cornerTopRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_lineLeft" rowspan="1" colspan="1"/>
+            <td class="rt_content" rowspan="1" colspan="1">
+               <table class="component">
+                  <tbody>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1"><b>Namespace</b></td>
+                        <td rowspan="1" colspan="1">http://www.tso.co.uk/assets/namespace/error</td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Diagram</b></div>
+                           <div class="floatRight"><input id="button_diagram_ErrorAttributes" type="image" src="img/btM.gif" value="-" onclick="switchState('diagram_ErrorAttributes');" class="control"/></div>
+                        </td>
+                        <td class="diagram" rowspan="1" colspan="1">
+                           <div id="diagram_ErrorAttributes" style="display:block"><img alt="Diagram" border="0" src="img/errors_xsd_Attribute_Group_ErrorAttributes.jpeg" usemap="#errors_xsd_Attribute_Group_ErrorAttributes"/><map name="errors_xsd_Attribute_Group_ErrorAttributes" id="errors_xsd_Attribute_Group_ErrorAttributes">
+                                 <area alt="errors_xsd.tmp#ErrorAttributes_Date" href="errors_xsd.html#ErrorAttributes_Date" coords="154,0,226,25" shape="rect"/>
+                                 <area alt="errors_xsd.tmp#ErrorAttributes_Time" href="errors_xsd.html#ErrorAttributes_Time" coords="154,35,226,60" shape="rect"/></map></div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Used by</b></div>
+                           <div class="floatRight"><input id="button_usedBy_ErrorAttributes" type="image" src="img/btM.gif" value="-" onclick="switchState('usedBy_ErrorAttributes');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="usedBy_ErrorAttributes" style="display:block">
+                              <table class="usedByTable">
+                                 <tr>
+                                    <td class="firstColumn" rowspan="1" colspan="1">Element </td>
+                                    <td rowspan="1" colspan="1"><b><a href="schemaLegislationCore_xsd.html#Legislation" target="mainFrame" title="http://www.legislation.gov.uk/namespaces/legislation" onclick="updatePageTitle('Schema documentation for schemaLegislationCore.xsd')" shape="rect">Legislation</a></b></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Attributes</b></div>
+                           <div class="floatRight"><input id="button_attributes_ErrorAttributes" type="image" src="img/btM.gif" value="-" onclick="switchState('attributes_ErrorAttributes');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="attributes_ErrorAttributes" style="display:block">
+                              <table class="attributesTable">
+                                 <thead>
+                                    <tr>
+                                       <th rowspan="1" colspan="1">QName</th>
+                                       <th width="10%" rowspan="1" colspan="1">Type</th>
+                                       <th width="5%" rowspan="1" colspan="1">Use</th>
+                                       <th rowspan="1" colspan="1"/>
+                                    </tr>
+                                 </thead>
+                                 <tr>
+                                    <td class="firstColumn" rowspan="1" colspan="1"><b><a href="errors_xsd.html#ErrorAttributes_Date" target="mainFrame" title="http://www.tso.co.uk/assets/namespace/error" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">Date</a></b></td>
+                                    <td rowspan="1" colspan="1"><b>xsd:date</b></td>
+                                    <td rowspan="1" colspan="1">optional</td>
+                                    <td rowspan="1" colspan="1">
+                                       <div class="annotation"/>
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <td class="firstColumn" rowspan="1" colspan="1"><b><a href="errors_xsd.html#ErrorAttributes_Time" target="mainFrame" title="http://www.tso.co.uk/assets/namespace/error" onclick="updatePageTitle('Schema documentation for errors.xsd')" shape="rect">Time</a></b></td>
+                                    <td rowspan="1" colspan="1"><b>xsd:time</b></td>
+                                    <td rowspan="1" colspan="1">optional</td>
+                                    <td rowspan="1" colspan="1">
+                                       <div class="annotation"/>
+                                    </td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="firstColumn" rowspan="1" colspan="1">
+                           <div class="floatLeft"><b>Source</b></div>
+                           <div class="floatRight"><input id="button_source_ErrorAttributes" type="image" src="img/btM.gif" value="-" onclick="switchState('source_ErrorAttributes');" class="control"/></div>
+                        </td>
+                        <td rowspan="1" colspan="1">
+                           <div id="source_ErrorAttributes" style="display:block">
+                              <table style="table-layout:fixed;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space: -o-pre-wrap;word-wrap: break-word;_white-space:pre;" class="preWrapContainer">
+                                 <tr>
+                                    <td width="100%" rowspan="1" colspan="1"><pre xml:space="preserve"><span class="tEl">&lt;xsd:attributeGroup</span><span class="tAN"> name=</span><span class="tAV">"ErrorAttributes"</span><span class="tEl">&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xsd:attribute</span><span class="tAN"> form=</span><span class="tAV">"qualified"</span><span class="tAN"> name=</span><span class="tAV">"Date"</span><span class="tAN"> type=</span><span class="tAV">"xsd:date"</span><span class="tEl">/&gt;</span><span class="tI">
+  </span><span class="tEl">&lt;xsd:attribute</span><span class="tAN"> form=</span><span class="tAV">"qualified"</span><span class="tAN"> name=</span><span class="tAV">"Time"</span><span class="tAN"> type=</span><span class="tAV">"xsd:time"</span><span class="tEl">/&gt;</span><span class="tI">
+</span><span class="tEl">&lt;/xsd:attributeGroup&gt;</span></pre></td>
+                                 </tr>
+                              </table>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+            <td class="rt_lineRight" rowspan="1" colspan="1"/>
+         </tr>
+         <tr>
+            <td class="rt_cornerBottomLeft" rowspan="1" colspan="1"/>
+            <td class="rt_lineBottom" rowspan="1" colspan="1"/>
+            <td class="rt_cornerBottomRight" rowspan="1" colspan="1"/>
+         </tr>
+      </table>
+      <div class="footer">
+         <hr/>
+         <div align="center">XML Schema documentation generated by <a href="http://www.oxygenxml.com" target="_parent" shape="rect"><span class="oXygenLogo"><span class="redX">&lt;</span>o<span class="redX">X</span>ygen<span class="redX">/&gt;</span></span></a><sup>®</sup> XML Editor.
+         </div>
+      </div><script type="text/javascript" xml:space="preserve">
+         <!--
+                     // The namespace is the selected option in the TOC combo.
+                    
+                     // Floats the toolbar.
+                     var globalControls = getElementObject("global_controls"); 
+                     
+                     if(globalControls != null){
+	                     var browser=navigator.appName;
+						 var version = parseFloat(navigator.appVersion.split('MSIE')[1]);
+						 
+						 var IE6 = false;
+						 if ((browser=="Microsoft Internet Explorer") && (version < 7)){
+						 	IE6 = true;
+						 }
+	
+	                     //alert (IE6 + " |V| " + version);
+	                     
+	                     if(IE6){
+	                     	// On IE 6 the 'fixed' property is not supported. We must use javascript. 
+	                         globalControls.style.position='absolute';                         
+	                         // The global controls will do not exist in the TOC frame, when chunking.
+	                         findAndFloat("global_controls", 225, 30);    
+	                     } else {
+	                      	  globalControls.style.position='fixed';                     	
+	                     }
+	                     
+	                     globalControls.style.right='0';                       
+                     }
+                //--></script></body>
+</html>
